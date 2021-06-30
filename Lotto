@@ -1,0 +1,31 @@
+import java.util.*;
+class Solution {
+    public int[] solution(int[] lottos, int[] win_nums) {
+        int[] answer=new int[2];
+        int sameCount=0;
+        int zeroCount=0;
+        Arrays.sort(lottos);
+        Arrays.sort(win_nums);
+        for(int i=0; i<lottos.length; i++) {
+		  for(int j=0; j<win_nums.length; j++) {
+			  if(lottos[i]==win_nums[j]) {
+				  sameCount=sameCount+1;
+				  break;
+			  }
+		  }
+	    }
+        for(int k=0; k<lottos.length; k++) {
+		  if(lottos[k]==0) {zeroCount=zeroCount+1;
+		  }
+	    }
+	  int maxTier=7-(sameCount+zeroCount);
+      int minTier=7-sameCount;
+        if(minTier>=6){minTier=6;}
+        else minTier=7-sameCount;
+        if(maxTier>=6){maxTier=6;}
+        else maxTier=7-(sameCount+zeroCount);
+      answer[0]=maxTier;
+      answer[1]=minTier;
+      return answer;
+    }
+}
