@@ -1,0 +1,108 @@
+import java.util.*;
+class Solution {
+    public Integer[] solution(int[] answers) {
+       int[] answer1=new int[answers.length];
+       int[] answer2=new int[answers.length];
+       int[] answer3=new int[answers.length];
+       Integer rightCount1=0;
+       Integer rightCount2=0;
+       Integer rightCount3=0;
+        
+        int[] semiAnswer1={1,2,3,4,5};
+        for(int i=0; i<answers.length; i++){
+            answer1[i]=i%semiAnswer1.length+1;
+        }
+        
+        int[] semiAnswer2={2,1,2,3,2,4,2,5};
+        for(int i=0; i<answers.length/semiAnswer2.length; i++){
+        for(int j=0; j<semiAnswer2.length; j++){
+            answer2[semiAnswer2.length*i+j]=semiAnswer2[j];
+        }
+        }
+        if(answers.length%semiAnswer2.length!=0) {
+        for(int k=0; k<answers.length%semiAnswer2.length; k++) {
+        	answer2[semiAnswer2.length*(answers.length/semiAnswer2.length)+k]=semiAnswer2[k];
+        }
+        }
+        
+        int[] semiAnswer3={3,3,1,1,2,2,4,4,5,5};
+        for(int i=0; i<answers.length/semiAnswer3.length; i++){
+        for(int j=0; j<semiAnswer3.length; j++){
+            answer3[semiAnswer3.length*i+j]=semiAnswer3[j];
+        }
+        }
+        if(answers.length%semiAnswer3.length!=0) {
+        for(int k=0; k<answers.length%semiAnswer3.length; k++) {
+        	answer3[semiAnswer3.length*(answers.length/semiAnswer3.length)+k]=semiAnswer3[k];
+        }
+        }
+        
+      for(int c=0; c<answers.length; c++){
+        if(answers[c]==answer1[c]){
+        rightCount1=rightCount1+1;
+        }
+      }
+      for(int c=0; c<answers.length; c++){
+        if(answers[c]==answer2[c]){
+        rightCount2=rightCount2+1;
+        }
+      }
+      for(int c=0; c<answers.length; c++){
+        if(answers[c]==answer3[c]){
+        rightCount3=rightCount3+1;
+        }
+      }
+        
+        Integer[] totCount=new Integer[3];
+        totCount[0]=rightCount1;
+        totCount[1]=rightCount2;
+        totCount[2]=rightCount3;
+        Arrays.sort(totCount,Collections.reverseOrder());
+        
+      if(totCount[0]==rightCount1&&totCount[0]==rightCount2&&totCount[0]==rightCount3) {
+    	 Integer[] top=new Integer[3];
+    	 top[0]=1;
+    	 top[1]=2;
+    	 top[2]=3;
+         return top;
+      }
+        
+      else if(totCount[0]==rightCount1&&totCount[0]==rightCount2&&totCount[0]!=rightCount3){
+    	 Integer[] top=new Integer[2];
+         top[0]=1;
+           top[1]=2;
+           return top;
+      }
+      else if(totCount[0]==rightCount1&&totCount[0]==rightCount3&&totCount[0]!=rightCount2){
+    	 Integer[] top=new Integer[2];
+         top[0]=1;
+         top[1]=3;
+         return top;
+      }
+      else if(totCount[0]==rightCount2&&totCount[0]==rightCount3&&totCount[0]!=rightCount1){
+    	 Integer[] top=new Integer[2];
+         top[0]=2;
+         top[1]=3;
+         return top;
+      }
+        
+      else if(totCount[0]==rightCount1&&totCount[0]!=rightCount3&&totCount[0]!=rightCount2){
+    	 Integer[] top=new Integer[1];
+         top[0]=1;
+         return top; 
+      }
+      else if(totCount[0]==rightCount2&&totCount[0]!=rightCount3&&totCount[0]!=rightCount1){
+         Integer[] top=new Integer[1]; 
+         top[0]=2;
+         return top;
+      }
+      }
+      else {
+      Integer[] top=new Integer[1];
+         top[0]=3;
+         return top;
+      }
+     
+    }
+    
+}
