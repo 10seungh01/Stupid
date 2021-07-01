@@ -1,0 +1,42 @@
+import java.util.*;
+public class PEwearing2 {
+  public int solution(int n, int[] lost, int[] reserve) {
+      Arrays.sort(lost);
+      Arrays.sort(reserve);
+      int mineCount=0;
+      int checkCount=0;
+          
+      for(int i=0; i<lost.length;i++) {
+    	 if(Arrays.binarySearch(reserve, lost[i])>=0) {
+    		 
+    		 reserve[Arrays.binarySearch(reserve, lost[i])]=-1;
+    		 lost[i]=-5;
+    	 }
+      }
+      
+      for(int i=0; i<lost.length;i++) {
+    	  for(int j=0; j<reserve.length; j++) {
+    		  if(lost[i]-1==reserve[j]) {
+    			  reserve[j]=-9; break;
+    		  }
+    		  else if(lost[i]==reserve[j]) {
+    			  reserve[j]=-9; break;
+    		  }
+    		  else if(lost[i]+1==reserve[j]) {
+    			  reserve[j]=-9; break;
+    		  }
+    	  }
+      }
+      
+     for(int i=0; i<reserve.length;i++) {
+    	 if(reserve[i]==-1)
+    		 mineCount=mineCount+1;
+     }
+     for(int i=0; i<reserve.length;i++) {
+    	 if(reserve[i]==-9)
+    		 checkCount=checkCount+1;
+     }
+     int ans=n-(lost.length-mineCount-checkCount);
+     return ans;
+  }
+}
