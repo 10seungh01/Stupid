@@ -1,0 +1,90 @@
+package num2;
+import java.util.*;
+public class KeyPad2 {
+	
+	public String solution2(int[] numbers, String hand) {
+		int p1=0;
+		int p2=0;
+		int p3=0;
+		int p4=0;
+		int p5=0;
+		int p6=0;
+		int[] num=numbers;
+		int[][] keyBoard={{1,2,3},
+				          {4,5,6},
+				          {7,8,9},
+				          {-1,0,-2}};
+		ArrayList listNL=new ArrayList();
+		ArrayList listNR=new ArrayList();
+		ArrayList listF= new ArrayList();
+		String listV= new String();
+		listNL.add(-1);
+		listNR.add(-2);
+		
+		for(int i=0; i<num.length; i++) {
+			if(num[i]==1||num[i]==4||num[i]==7) {
+			listNL.add(num[i]);
+			listV=listV+"L";
+			continue;
+			}
+			else if(num[i]==3||num[i]==6||num[i]==9) {
+				listNR.add(num[i]);
+				listV=listV+"R";
+				continue;
+			}
+		    else if(num[i]==2||num[i]==5||num[i]==8||num[i]==0) {
+		    	for (int j = 0; j < keyBoard.length; j++) {
+		    		 int[] inArr = keyBoard[j];
+		    		
+		    	  for (int k = 0; k < inArr.length; k++) {
+		    		if(inArr[k]==num[i]) {
+		    			 p1=j; 
+		    			 p2=k;
+		    			 break;
+		    		}
+		    	  }
+		    	}
+		    	for (int j = 0; j < keyBoard.length; j++) {
+		    		 int[] inArr = keyBoard[j];
+		    	  for (int k = 0; k < inArr.length; k++) {
+		    		if(inArr[k]==(int)listNL.get(listNL.size()-1)) {
+		    			 p3=j; 
+		    			 p4=k;
+		    			 break;
+		    		}
+		    	  }
+		    	}
+		    	for (int j = 0; j < keyBoard.length; j++) {
+		    		 int[] inArr = keyBoard[j];
+		    	  for (int k = 0; k < inArr.length; k++) {
+		    		if(inArr[k]==(int)listNR.get(listNR.size()-1)) {
+		    			 p5=j;
+		    			 p6=k;
+		    			 break;
+		    		}
+		    	  }
+		    	}
+		    	if(Math.abs(p1-p3)+Math.abs(p2-p4)<Math.abs(p1-p5)+Math.abs(p2-p6)) {
+					listNL.add(num[i]);
+					listV=listV+"L";
+		    	}
+		    	else if(Math.abs(p1-p3)+Math.abs(p2-p4)>Math.abs(p1-p5)+Math.abs(p2-p6)) {
+					listNR.add(num[i]);
+					listV=listV+"R";
+		    	}
+		    	else if((Math.abs(p1-p3)+Math.abs(p2-p4))==(Math.abs(p1-p5)+Math.abs(p2-p6))) {
+					
+					if (hand.equals("right")) {
+						listNR.add(num[i]);
+					listV=listV+"R";
+					}
+					else if (hand.equals("left")) {
+						listNL.add(num[i]);
+						listV=listV+"L";
+					}
+		    	}
+		   }
+		}		
+		return listV;
+	}
+}
