@@ -1,0 +1,71 @@
+package num2;
+import java.util.ArrayList;
+
+class TreasureMap {
+    public String[] solution(int n, int[] arr1, int[] arr2) {
+        String[] answer = {};
+        ArrayList<String> map1=new ArrayList<>();
+        ArrayList<String> map2=new ArrayList<>();
+        char[] box1= new char[n];
+        char[] box2= new char[n];
+        char[][] totMap= new char[n][n];
+        String[] semiAns=new String[n];
+        String bar="";
+        
+        for(int i=0; i<n; i++) {
+        	box1[i]='0';
+        }
+        for(int i=0; i<n; i++) {
+        	box2[i]='0';
+        }
+        
+        //지도1과 지도2 이진수화
+        for(int i=0; i<arr1.length; i++) {
+        	String k=Integer.toBinaryString(arr1[i]);
+        	map1.add(i,k);
+        }
+        
+        for(int i=0; i<arr1.length; i++) {
+        	String k=Integer.toBinaryString(arr2[i]);
+        	map2.add(i,k);
+        }
+        
+        //이진수화된 지도들의 맨 윗줄부터 n*n 화 시키기
+        for(int i=0; i<arr1.length; i++) {
+           for(int j=0; j<map1.get(i).length(); j++) {
+        	   box1[n-map1.get(i).length()+j]=map1.get(i).charAt(j);
+           }
+           for(int j=0; j<map2.get(i).length(); j++) {
+         	   box2[n-map2.get(i).length()+j]=map2.get(i).charAt(j);
+           }
+           // 공백과 #처리
+           for(int j=0; j<box1.length; j++) {
+        	   if(box1[j]==box2[j]) {
+        		   if (box1[j]=='0')
+        		   totMap[i][j]=' ';
+        		   else totMap[i][j]='#';
+        	   }
+        	   else totMap[i][j]='#';
+           }
+           // 박스 초기화
+           for(int k=0; k<n; k++) {
+           	box1[k]='0';
+           }
+           for(int k=0; k<n; k++) {
+            box2[k]='0';
+           }
+        }
+       
+       // 만들어진 char 2차원배열 1차원 String 배열화 
+       for(int i=0; i<n; i++) {
+    	  for(int j=0; j<n; j++) {
+    		  bar=bar+totMap[i][j];
+    	  }
+    	  semiAns[i]=bar;
+    	  bar="";
+       }
+        
+        
+        return answer=semiAns;
+    }
+}
