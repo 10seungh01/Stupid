@@ -1,0 +1,79 @@
+package Level2;
+import java.util.ArrayList;
+
+class CountryOf124_2 {
+    public String solution2(int n) {
+        String totAns="";
+        double j=0;
+        int i;
+        double f;
+        StringBuffer str=new StringBuffer();
+        ArrayList arr=new ArrayList();
+        
+        //n을 변환했을때 길이 i
+        for(i=1;true;i++) {
+        	if(n>j) {
+        		//3의 거듭제곱의 합
+        		j=j+Math.pow(3, i);
+        		arr.add(i-1,(int)j);
+        	}
+        	else {i--;break;}
+        }
+        //i만큼의 배열 생성
+        int[] ans=new int[i];
+        //i가 1일때, 즉 n이 1,2,3이어서 한자리 수로 변환될때 처리 과정
+        if(i==1) {
+            ans[0]=n;
+            if(ans[0]==3)
+            	ans[0]=4;
+            totAns=totAns+ans[0];
+            return totAns;}
+        //그외 모든 n값에 대아여 처리 과정
+        else {
+            f=((double)n-(int)arr.get((int)(arr.size()-2)))/Math.pow(3, i-1);
+        // 가장 앞자리 숫자   
+            if(f<=1) 
+       	     ans[0]=1;
+            else if(f>1&&f<=2) 
+             ans[0]=2;
+            else if(f>2&&f<=3) 
+       	     ans[0]=3;
+        }
+        // 똑같이 등분시키기 전에 3의 거듭제곱의 합을 뺌
+        double k=n-(int)arr.get(arr.size()-2);
+        // 똑같이 등분시키는 과정
+        double l=k/Math.pow(3, i-1);
+        
+        if(l<=1) 
+      	     l=1; 
+        else if(l>1&&l<=2) 
+             l=2;
+        else if(l>2&&l<=3) 
+      	     l=3;
+        
+        double v=k-(int)Math.pow(3, i-1)*(l-1);
+        // 등분시킨 것들 안에서 n이 차지하는 위치 구하기
+        for(int p=1; p<i-1; p++) {
+        	double q=v/(int)Math.pow(3, i-p-1);
+        	  if(q<=1) 
+         	     ans[p]=1;
+              else if(q>1&&q<=2) 
+            	 ans[p]=2;
+              else if(q>2&&q<=3) 
+            	 ans[p]=3;
+        	  // 다음자리 수를 구하기 위해 준비하는 과정
+        	v=v-(int)Math.pow(3, i-p-1)*(ans[p]-1);
+        }
+        //마지막 자리수 구하기
+        ans[i-1]=(int)v;
+       //모든 3을 4로 바꾸기 
+        for(int t=0; t<i; t++)
+        if(ans[t]==3)
+        	ans[t]=4;
+        
+        //배열 안의 수들을 문자열로 합치기
+        for(int t=0; t<i;t++) 
+        totAns=totAns+ans[t];
+        return totAns;
+    }
+}
