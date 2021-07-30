@@ -1,0 +1,40 @@
+package Level2;
+import java.util.ArrayList;
+
+	class CountryOf124 {
+	    public String solution(int n) {
+	        String answer = "";
+	    	ArrayList arr=new ArrayList();
+	    	int a;
+	    	int b;
+	    	int i=0;
+	    	
+	    	while(n>3) {
+	    	//n또는 몫이 3의 배수일 때
+	    	if(n%3==0) {
+	    		a=n/3;
+	    		b=n%3;
+	    		
+	    	    a--;
+	    		b=b+3;
+	    		arr.add(i,b);
+	    		n=a;
+	    	}
+	    	//n또는 몫이 3의 배수가 아닐 때
+	    	else {
+	    		  a=n/3;
+	    		  b=n%3;
+	    		  n=a;
+	    		  arr.add(i,b);
+	    		}
+	    	}
+	    	arr.add(i,n);
+	    	//리스트의 문자열화
+	    	for(int j=0; j<arr.size();j++) 
+	    		answer=answer+arr.get(j);
+	    	//3을 4로 변환
+	    	answer=answer.replace('3', '4');
+	        return answer;
+	    }
+	}
+
