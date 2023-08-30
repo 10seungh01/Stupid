@@ -1,0 +1,85 @@
+#include <vector>
+#include <iostream>
+#include <algorithm>
+int cnt = 1;
+
+struct route {
+    int start;
+    int dest;
+};
+
+/*
+std::ostream& operator<<(std::ostream& os, const route& r)              //Standard Output of struct route
+{
+    return (os << "{" << r.start << "," << r.dest << "}");
+}
+
+void printRoutes(std::vector<route> v)                          //Print all routes;
+{
+    for (int i = 0; i < num; i++)
+    {
+        std::cout << v[i]<< " ";
+    }
+
+    std::cout << std::endl;
+}
+*/
+
+
+bool cmproutesD(route r1, route r2)                          //Compare between route1 and route2 (Descent);
+{
+    if (r1.dest > r2.dest)
+        return true;
+    else
+        return false;
+}
+
+void func1(std::vector<route> V, int i)
+{
+    int s = i;
+    int j = i + 1;
+    while(j < V.size())
+    {
+        //std::cout << V.size() << ": "<<j<<"단계"<<std::endl;
+        for (i = s; i < j; i++)
+        {
+            if (V[j].dest > V[i].start)
+            {
+               // std::cout << i << "," << j << std::endl;
+
+                continue;
+            }
+            else
+            {
+                cnt++;
+                //std::cout << "next" << std::endl;
+                func1(V, j);
+                return;
+            }
+        }
+        j++;
+    }
+}
+
+int func2(std::vector<route> V)
+{
+
+    func1(V, 0);
+    return cnt;
+}
+
+int solution(std::vector<std::vector<int>> targets) {            //Main Solution Function
+    int answer = 0;
+    std::vector<route> routes(targets.size());                         //Construction of Vector of struct route
+
+    for (int i = 0; i < targets.size(); i++)                           //Change 2-dim vector INTO 1-dim vector of struct route
+    {
+        routes[i].start=targets[i][0];
+        routes[i].dest=targets[i][1];
+    }
+
+    std::sort(routes.begin(), routes.end(), cmproutesD);
+    //printRoutes(routes);
+    answer = func2(routes);
+    return answer;
+}
